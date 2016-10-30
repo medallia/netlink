@@ -969,3 +969,26 @@ func TestLinkXdp(t *testing.T) {
 		t.Fatal(err)
 	}
 }
+
+func TestLinkAddDelIptun(t *testing.T) {
+	tearDown := setUpNetlinkTest(t)
+	defer tearDown()
+
+	testLinkAddDel(t, &Iptun{
+		LinkAttrs: LinkAttrs{Name: "foo"},
+		PMtuDisc:  1,
+		Local:     net.IPv4(127, 0, 0, 1),
+		Remote:    net.IPv4(127, 0, 0, 1)})
+}
+
+func TestLinkAddDelVti(t *testing.T) {
+	tearDown := setUpNetlinkTest(t)
+	defer tearDown()
+
+	testLinkAddDel(t, &Vti{
+		LinkAttrs: LinkAttrs{Name: "foo"},
+		IKey:      0x101,
+		OKey:      0x101,
+		Local:     net.IPv4(127, 0, 0, 1),
+		Remote:    net.IPv4(127, 0, 0, 1)})
+}
